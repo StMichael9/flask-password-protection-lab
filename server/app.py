@@ -59,9 +59,7 @@ class Login(Resource):
 
 
 class CheckSession(Resource):
-
     def get(self):
-        
         user_id = session.get('user_id')
         if user_id:
             user = User.query.filter(User.id == user_id).first()
@@ -70,19 +68,10 @@ class CheckSession(Resource):
         return {}, 401
     
 class Logout(Resource):
-    
     def delete(self):
         
         session.clear()
         return {}, 204
 
-
-
-
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
-class ClearSession(Resource):
-
-    def delete(self):
-        session.clear()
-        return {}, 204
