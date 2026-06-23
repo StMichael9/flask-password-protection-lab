@@ -39,6 +39,8 @@ class Signup(Resource):
         session['user_id'] = new_user.id
 
         return UserSchema().dump(new_user), 201
+api.add_resource(Signup, '/signup')
+
     
 
 class Login(Resource):
@@ -55,7 +57,7 @@ class Login(Resource):
             return UserSchema().dump(user), 200
 
         return {'Error': "Unauthorized"}, 401
-
+api.add_resource(Login, '/login')
 
 
 class CheckSession(Resource):
@@ -65,13 +67,20 @@ class CheckSession(Resource):
             user = User.query.filter(User.id == user_id).first()
             return UserSchema().dump(user), 200
         
-        return {}, 401
-    
+        return {}, 204
+api.add_resource(CheckSession, '/check_session')  
+
 class Logout(Resource):
+
     def delete(self):
-        
+
         session.clear()
         return {}, 204
+api.add_resource(Logout, '/logout')
+
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
